@@ -1,0 +1,13 @@
+package com.example.divefinder;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DiveFinderApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DiveFinderApplication.class, args);
+    }
+
+}
