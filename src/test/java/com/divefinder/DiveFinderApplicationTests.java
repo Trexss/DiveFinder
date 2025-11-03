@@ -1,4 +1,4 @@
-package com.example.divefinder;
+package com.divefinder;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
