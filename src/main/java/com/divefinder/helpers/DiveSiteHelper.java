@@ -20,6 +20,13 @@ public class DiveSiteHelper {
         return site;
     }
     public DiveSiteDto diveSiteToDto(DiveSite site){
+        DiveSiteDto dto = new DiveSiteDto();
+        dto.setDescription(site.getDescription());
+        dto.setLatitude(site.getLatitude());
+        dto.setLongitude(site.getLongtitude());
+        dto.setSiteName(site.getSiteName());
+        dto.setApproved(site.isApproved());
+        return dto;
 
     }
 }

@@ -33,19 +33,20 @@ public class DiveSiteRestController {
     }
 
     @GetMapping("/{id}")
-    public DiveSite getSiteById(@PathVariable int id) {
+    public DiveSiteDto getSiteById(@PathVariable int id) {
         try {
-            return diveSiteService.getSiteById(id);
+            return diveSiteHelper.diveSiteToDto(diveSiteService.getSiteById(id));
+
         } catch (com.exceptions.EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.toString());
         }
     }
 
     @PostMapping
-    public DiveSite createSite(@Valid @RequestBody DiveSiteDto dto) {
+    public DiveSiteDto createSite(@Valid @RequestBody DiveSiteDto dto) {
         DiveSite diveSite = diveSiteHelper.diveSiteDtoToDiveSite(dto);
-         return diveSiteService.createDiveSite(diveSite);
-
+          DiveSite createdSite = diveSiteService.createDiveSite(diveSite);
+          return diveSiteHelper.diveSiteToDto(createdSite);
 
          }
 
@@ -54,7 +55,7 @@ public class DiveSiteRestController {
         try {
             diveSiteService.deleteDiveSite(id);
         } catch (com.exceptions.EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.toString());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
 
     }
