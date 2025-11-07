@@ -38,7 +38,7 @@ public class DiveSiteRestController {
             return diveSiteHelper.diveSiteToDto(diveSiteService.getSiteById(id));
 
         } catch (com.exceptions.EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.toString());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 

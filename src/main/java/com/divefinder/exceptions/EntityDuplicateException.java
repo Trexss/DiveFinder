@@ -1,4 +1,4 @@
-package com.exceptions;
+package com.divefinder.exceptions;
 
 public class EntityDuplicateException extends RuntimeException {
 
@@ -6,4 +6,7 @@ public class EntityDuplicateException extends RuntimeException {
         super(String.format("%s with %s %s already exists.", type, attribute, value));
     }
 
+    public EntityDuplicateException(String type) {
+
+    }
 }
