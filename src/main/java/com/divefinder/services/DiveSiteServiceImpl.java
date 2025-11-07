@@ -25,20 +25,28 @@ public class DiveSiteServiceImpl implements DiveSiteService {
         return diveSiteRepository.getSiteById(id);
     }
 
+
     @Override
     public DiveSite createDiveSite(DiveSite diveSite) {
         try {
-            // If a site with the same name exists, getDiveSiteByName will succeed -> duplicate
+            // checks if DiveSite with the same name exists
             diveSiteRepository.getDiveSiteByName(diveSite.getSiteName());
             throw new EntityDuplicateException("Dive site with name " + diveSite.getSiteName() + " already exists.");
         } catch (com.exceptions.EntityNotFoundException e) {
-            // Not found -> create and return
+
             return diveSiteRepository.createDiveSite(diveSite);
         }
     }
 
     @Override
     public void deleteDiveSite(int id) {
+        try {
+            // checks if DiveSite exists
+            diveSiteRepository.getSiteById(id);
+            diveSiteRepository.deleteDiveSite(id);
+        } catch (com.exceptions.EntityNotFoundException e) {
+            throw new com.exceptions.EntityNotFoundException("Dive site  ", id);
+        }
 
     }
 }

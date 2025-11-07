@@ -2,12 +2,11 @@ package com.divefinder.helpers;
 
 import com.divefinder.models.DiveSite;
 import com.divefinder.models.DiveSiteDto;
-import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DiveSiteHelper {
-    public DiveSiteHelper() {
+public class DiveSiteDtoMapper {
+    public DiveSiteDtoMapper() {
     }
 
     public DiveSite diveSiteDtoToDiveSite(DiveSiteDto dto){
@@ -16,6 +15,7 @@ public class DiveSiteHelper {
         site.setLatitude(dto.getLatitude());
         site.setLongtitude(dto.getLongitude());
         site.setSiteName(dto.getSiteName());
+        site.setApproved(dto.isApproved());
 
         return site;
     }

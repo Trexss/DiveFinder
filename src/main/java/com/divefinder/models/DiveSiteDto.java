@@ -29,10 +29,15 @@ public class DiveSiteDto {
 
         }
 
+    public DiveSiteDto(String siteName, String description, double latitude, double longitude, boolean approved) {
+        this.siteName = siteName;
+        this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.approved = approved;
+    }
 
-
-
-        public String getSiteName() {
+    public String getSiteName() {
             return siteName;
         }
 

@@ -1,6 +1,6 @@
 package com.divefinder.controllers.rest;
 
-import com.divefinder.helpers.DiveSiteHelper;
+import com.divefinder.helpers.DiveSiteDtoMapper;
 import com.divefinder.models.DiveSite;
 import com.divefinder.models.DiveSiteDto;
 import com.divefinder.services.DiveSiteService;
@@ -16,26 +16,26 @@ import java.util.List;
 @RequestMapping("/api/v1/sites")
 public class DiveSiteRestController {
     private final DiveSiteService diveSiteService;
-    private final DiveSiteHelper diveSiteHelper;
+    private final DiveSiteDtoMapper diveSiteDtoMapper;
 
     @Autowired
-    public DiveSiteRestController(DiveSiteService diveSiteService, DiveSiteHelper diveSiteHelper) {
+    public DiveSiteRestController(DiveSiteService diveSiteService, DiveSiteDtoMapper diveSiteDtoMapper) {
         this.diveSiteService = diveSiteService;
-        this.diveSiteHelper = diveSiteHelper;
+        this.diveSiteDtoMapper = diveSiteDtoMapper;
     }
 
     @GetMapping
     public List<DiveSiteDto> getApprovedSites() {
         return diveSiteService.getAllApprovedSites()
                 .stream()
-                .map(diveSiteHelper::diveSiteToDto)
+                .map(diveSiteDtoMapper::diveSiteToDto)
                 .toList();
     }
 
     @GetMapping("/{id}")
     public DiveSiteDto getSiteById(@PathVariable int id) {
         try {
-            return diveSiteHelper.diveSiteToDto(diveSiteService.getSiteById(id));
+            return diveSiteDtoMapper.diveSiteToDto(diveSiteService.getSiteById(id));
 
         } catch (com.exceptions.EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -44,9 +44,9 @@ public class DiveSiteRestController {
 
     @PostMapping
     public DiveSiteDto createSite(@Valid @RequestBody DiveSiteDto dto) {
-        DiveSite diveSite = diveSiteHelper.diveSiteDtoToDiveSite(dto);
+        DiveSite diveSite = diveSiteDtoMapper.diveSiteDtoToDiveSite(dto);
           DiveSite createdSite = diveSiteService.createDiveSite(diveSite);
-          return diveSiteHelper.diveSiteToDto(createdSite);
+          return diveSiteDtoMapper.diveSiteToDto(createdSite);
 
          }
 

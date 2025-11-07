@@ -16,7 +16,7 @@ public class DiveSite {
     private double latitude;
     private double longtitude;
 
-    private boolean approved;
+    private boolean isApproved;
 
 
 
@@ -63,10 +63,10 @@ public class DiveSite {
         this.longtitude = longtitude;
     }
     public boolean isApproved() {
-        return approved;
+        return isApproved;
     }
 
     public void setApproved(boolean approved) {
-        this.approved = approved;
+        this.isApproved = approved;
     }
 }
