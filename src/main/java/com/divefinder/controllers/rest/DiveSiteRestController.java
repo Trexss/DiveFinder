@@ -1,5 +1,6 @@
 package com.divefinder.controllers.rest;
 
+import com.divefinder.exceptions.EntityDuplicateException;
 import com.divefinder.helpers.DiveSiteDtoMapper;
 import com.divefinder.models.DiveSite;
 import com.divefinder.models.DiveSiteDto;
@@ -45,10 +46,14 @@ public class DiveSiteRestController {
     @PostMapping
     public DiveSiteDto createSite(@Valid @RequestBody DiveSiteDto dto) {
         DiveSite diveSite = diveSiteDtoMapper.diveSiteDtoToDiveSite(dto);
-          DiveSite createdSite = diveSiteService.createDiveSite(diveSite);
-          return diveSiteDtoMapper.diveSiteToDto(createdSite);
+        try {
+            DiveSite createdSite = diveSiteService.createDiveSite(diveSite);
+            return diveSiteDtoMapper.diveSiteToDto(createdSite);
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
 
-         }
+        }
+    }
 
     @DeleteMapping("/{id}")
     public void deleteSite(@PathVariable int id) {
