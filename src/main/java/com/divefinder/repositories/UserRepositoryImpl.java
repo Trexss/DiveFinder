@@ -17,32 +17,29 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findUserById(int id) {
-        try(Session session = sessionFactory.openSession()){
+        Session session = sessionFactory.getCurrentSession();
             User user = session.get(User.class, id);
-            if(user == null){
+            if (user == null) {
                 throw new com.exceptions.EntityNotFoundException("User ", id);
             }
             return user;
-        }
+
     }
 
     @Override
     public User findUserByEmail(String email) {
-        try (Session session = sessionFactory.openSession()) {
-            Query <User> query = session.createQuery("from User u where u.email = :email", User.class)
-                    .setParameter("email", email);
-            return query.uniqueResultOptional()
-                    .orElseThrow(() -> new com.exceptions.EntityNotFoundException("User with email " + email + " not found."));
-        }
+        Session session = sessionFactory.getCurrentSession();
+        Query<User> query = session.createQuery("from User u where u.email = :email", User.class)
+                .setParameter("email", email);
+        return query.uniqueResultOptional()
+                .orElseThrow(() -> new com.exceptions.EntityNotFoundException("User with email " + email + " not found."));
     }
+
 
     @Override
     public User createUser(User user) {
-        try(Session session = sessionFactory.openSession()){
-            session.beginTransaction();
-            session.persist(user);
-            session.getTransaction().commit();
-            return user;
-        }
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(user);
+        return user;
     }
 }

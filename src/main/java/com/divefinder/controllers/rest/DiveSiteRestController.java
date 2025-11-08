@@ -31,6 +31,7 @@ public class DiveSiteRestController {
         this.diveSiteDtoMapper = diveSiteDtoMapper;
         this.commentDtoMapper = commentDtoMapper;
     }
+    //toDo make errors trace show up in postman
 
     @GetMapping
     public List<DiveSiteDto> getApprovedSites() {
@@ -73,7 +74,13 @@ public class DiveSiteRestController {
     }
     @GetMapping("/{id}/comments")
     public Set<CommentDto> getCommentsForSite(@PathVariable int id) {
-        Set<Comment> comments = diveSiteService.getCommentsForDiveSite(id);
+        Set<Comment> comments;
+        try{
+             comments = diveSiteService.getCommentsForDiveSite(id);
+        }catch (com.exceptions.EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
         return comments.stream()
                .map(commentDtoMapper::toDto)
                .collect(Collectors.toSet());

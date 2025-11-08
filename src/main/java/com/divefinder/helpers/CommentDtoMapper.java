@@ -31,7 +31,7 @@ public class CommentDtoMapper {
     public  Comment fromDto(CommentDto dto, int diveSiteId, int userId) {
         Comment comment = new Comment();
         comment.setCommentText(dto.getCommentText());
-        comment.setDateCreated(dto.getDateCreated());
+
 
         User userRef = new User();
         userRef.setId(userId);  // only set id

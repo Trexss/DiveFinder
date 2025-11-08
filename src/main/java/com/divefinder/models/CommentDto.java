@@ -11,23 +11,22 @@ public class CommentDto {
     @Size(max = 1000, message = "Comment text cannot exceed 1000 characters")
     private String commentText;
 
-    @NotNull(message = "Date created cannot be null")
+
     private LocalDate dateCreated;
 
-    @NotNull(message = "User ID cannot be null")
+
     private Integer userId;
 
-    @NotNull(message = "Dive site ID cannot be null")
+
     private Integer diveSiteId;
 
     public CommentDto() {
     }
 
-    public CommentDto(String commentText, LocalDate dateCreated, Integer userId, Integer diveSiteId) {
+    public CommentDto(String commentText, Integer userId) {
         this.commentText = commentText;
-        this.dateCreated = dateCreated;
         this.userId = userId;
-        this.diveSiteId = diveSiteId;
+
     }
 
     public String getCommentText() {

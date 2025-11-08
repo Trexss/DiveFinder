@@ -6,6 +6,7 @@ import com.divefinder.models.DiveSite;
 import com.divefinder.repositories.DiveSiteRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -20,6 +21,7 @@ public class DiveSiteServiceImpl implements DiveSiteService {
         this.commentService = commentService;
     }
     @Override
+    @Transactional(readOnly = true)
     public List<DiveSite> getAllApprovedSites() {
         return diveSiteRepository.getAllApprovedSites();
     }
@@ -31,6 +33,7 @@ public class DiveSiteServiceImpl implements DiveSiteService {
 
 
     @Override
+    @Transactional
     public DiveSite createDiveSite(DiveSite diveSite) {
         try {
             // checks if DiveSite with the same name exists
@@ -43,6 +46,7 @@ public class DiveSiteServiceImpl implements DiveSiteService {
     }
 
     @Override
+    @Transactional
     public void deleteDiveSite(int id) {
         try {
             // checks if DiveSite exists
@@ -55,7 +59,14 @@ public class DiveSiteServiceImpl implements DiveSiteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Set<Comment> getCommentsForDiveSite(int diveSiteId) {
+        try {
+            // checks if DiveSite exists
+            diveSiteRepository.getSiteById(diveSiteId);
+        } catch (com.exceptions.EntityNotFoundException e) {
+            throw new com.exceptions.EntityNotFoundException("Dive site  ", diveSiteId);
+        }
         return commentService.getCommentsForDiveSite(diveSiteId);
     }
 

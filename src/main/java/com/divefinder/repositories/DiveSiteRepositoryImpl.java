@@ -22,47 +22,40 @@ public class DiveSiteRepositoryImpl implements DiveSiteRepository{
 
     @Override
     public List<DiveSite> getAllApprovedSites() {
-        try(Session session = sessionFactory.openSession()){
+        Session session = sessionFactory.getCurrentSession();
             Query<DiveSite> query = session.createQuery("from DiveSite where isApproved = true", DiveSite.class);
             return query.list();
-        }
+
     }
 
     @Override
     public DiveSite getSiteById(int id) {
-        try(Session session = sessionFactory.openSession()){
+        Session session = sessionFactory.getCurrentSession();
             DiveSite diveSite = session.get(DiveSite.class, id);
             if(diveSite == null){
                 throw new com.exceptions.EntityNotFoundException("Dive site ", id);
             }
             return diveSite;
-        }
+
     }
 
     @Override
     public DiveSite createDiveSite(DiveSite diveSite) {
-        try(Session session = sessionFactory.openSession()){
-            session.beginTransaction();
-            session.persist(diveSite);
-            session.getTransaction().commit();
-            return diveSite;
-        }
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(diveSite);
+        return diveSite;
     }
 
     @Override
     public void deleteDiveSite(int id) {
-        try(Session session = sessionFactory.openSession()){
-            session.beginTransaction();
-            DiveSite diveSite = session.get(DiveSite.class, id);
-
-            session.remove(diveSite);
-            session.getTransaction().commit();
-        }
+        Session session = sessionFactory.getCurrentSession();
+        DiveSite siteToDelete = session.get(DiveSite.class, id);
+        session.remove(siteToDelete);
     }
 
     @Override
     public DiveSite getDiveSiteByName(String name) {
-        try(Session session = sessionFactory.openSession()){
+        Session session = sessionFactory.getCurrentSession();
             Query<DiveSite> query = session.createQuery("from DiveSite where siteName = :name", DiveSite.class);
             query.setParameter("name", name);
             DiveSite diveSite = query.uniqueResult();
@@ -70,6 +63,6 @@ public class DiveSiteRepositoryImpl implements DiveSiteRepository{
                 throw new com.exceptions.EntityNotFoundException("Dive Site with " + name + "does not exist");
             }
             return diveSite;
-        }
+
     }
 }

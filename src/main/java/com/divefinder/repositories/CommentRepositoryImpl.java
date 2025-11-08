@@ -22,7 +22,7 @@ public class CommentRepositoryImpl implements CommentRepository{
 
     @Override
     public Set<Comment> getCommentsForDiveSite(int diveSiteId) {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = sessionFactory.getCurrentSession();
             Query<Comment> query = session.createQuery(
                     "select distinct c from Comment c " +
                             "join fetch c.user u " +
@@ -33,31 +33,14 @@ public class CommentRepositoryImpl implements CommentRepository{
             query.setParameter("diveSiteId", diveSiteId);
             List<Comment> list = query.list();
             return new HashSet<>(list);
-        }
+
 
     }
 
     @Override
     public void addCommentToDiveSite(Comment comment) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-
-            // Load managed entities
-            User managedUser = session.get(User.class, comment.getUser().getId());
-            DiveSite managedSite = session.get(DiveSite.class, comment.getDiveSite().getId());
-
-            if (managedUser == null || managedSite == null) {
-                throw new com.exceptions.EntityNotFoundException("User or DiveSite not found");
-            }
-
-
-            comment.setUser(managedUser);
-            comment.setDiveSite(managedSite);
-
-            session.persist(comment);
-            session.getTransaction().commit();
-
-        }
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(comment);
     }
 }
 
