@@ -1,19 +1,23 @@
 package com.divefinder.services;
 
 import com.divefinder.exceptions.EntityDuplicateException;
+import com.divefinder.models.Comment;
 import com.divefinder.models.DiveSite;
 import com.divefinder.repositories.DiveSiteRepository;
 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DiveSiteServiceImpl implements DiveSiteService {
     private final DiveSiteRepository diveSiteRepository;
+    private final CommentService commentService;
 
-    public DiveSiteServiceImpl(DiveSiteRepository diveSiteRepository) {
+    public DiveSiteServiceImpl(DiveSiteRepository diveSiteRepository, CommentService commentService) {
         this.diveSiteRepository = diveSiteRepository;
+        this.commentService = commentService;
     }
     @Override
     public List<DiveSite> getAllApprovedSites() {
@@ -48,5 +52,15 @@ public class DiveSiteServiceImpl implements DiveSiteService {
             throw new com.exceptions.EntityNotFoundException("Dive site  ", id);
         }
 
+    }
+
+    @Override
+    public Set<Comment> getCommentsForDiveSite(int diveSiteId) {
+        return commentService.getCommentsForDiveSite(diveSiteId);
+    }
+
+    @Override
+    public void addCommentToDiveSite(Comment comment) {
+        commentService.addCommentToDiveSite(comment);
     }
 }

@@ -1,7 +1,10 @@
 package com.divefinder.controllers.rest;
 
 import com.divefinder.exceptions.EntityDuplicateException;
+import com.divefinder.helpers.CommentDtoMapper;
 import com.divefinder.helpers.DiveSiteDtoMapper;
+import com.divefinder.models.Comment;
+import com.divefinder.models.CommentDto;
 import com.divefinder.models.DiveSite;
 import com.divefinder.models.DiveSiteDto;
 import com.divefinder.services.DiveSiteService;
@@ -12,17 +15,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/sites")
 public class DiveSiteRestController {
     private final DiveSiteService diveSiteService;
     private final DiveSiteDtoMapper diveSiteDtoMapper;
+   private final CommentDtoMapper commentDtoMapper;
 
     @Autowired
-    public DiveSiteRestController(DiveSiteService diveSiteService, DiveSiteDtoMapper diveSiteDtoMapper) {
+    public DiveSiteRestController(DiveSiteService diveSiteService, DiveSiteDtoMapper diveSiteDtoMapper, CommentDtoMapper commentDtoMapper) {
         this.diveSiteService = diveSiteService;
         this.diveSiteDtoMapper = diveSiteDtoMapper;
+        this.commentDtoMapper = commentDtoMapper;
     }
 
     @GetMapping
@@ -63,5 +70,21 @@ public class DiveSiteRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
 
+    }
+    @GetMapping("/{id}/comments")
+    public Set<Comment> getCommentsForSite(@PathVariable int id) {
+        Set<Comment> comments = diveSiteService.getCommentsForDiveSite(id);
+         Set<CommentDto> commentDtos = comments.stream()
+                .map(commentDtoMapper::toDto)
+                .collect(Collectors.toSet());
+        return comments;
+
+    }
+    @PostMapping("/{id}/comments")
+    public void addCommentToSite(@PathVariable int id, @Valid @RequestBody CommentDto commentDto) {
+        //toDo will need to get user from auth service
+        int userId = 1;
+        Comment comment = commentDtoMapper.fromDto(commentDto, id, userId);
+        diveSiteService.addCommentToDiveSite(comment);
     }
 }
