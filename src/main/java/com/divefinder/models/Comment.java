@@ -15,7 +15,7 @@ public class Comment {
     @Column(name = "comment_text")
     private String commentText;
 
-    @Column(name = "date_created",)
+    @Column(name = "date_created")
     private LocalDate dateCreated;
 
     @ManyToOne
@@ -34,6 +34,10 @@ public class Comment {
         this.dateCreated = dateCreated;
         this.user = user;
         this.diveSite = diveSite;
+    }
+    @PrePersist
+    public void prePersist() {
+        if (dateCreated == null) dateCreated = LocalDate.now();
     }
 
     public int getId() {

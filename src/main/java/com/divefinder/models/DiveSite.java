@@ -2,6 +2,9 @@ package com.divefinder.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "dive_sites")
 public class DiveSite {
@@ -14,9 +17,11 @@ public class DiveSite {
 
     private String siteName;
     private double latitude;
-    private double longtitude;
+    private double longitude;
 
     private boolean isApproved;
+    @OneToMany(mappedBy = "diveSite")
+    private Set<Comment> comments = new HashSet<>();
 
 
 
@@ -56,11 +61,11 @@ public class DiveSite {
     }
 
     public double getLongtitude() {
-        return longtitude;
+        return longitude;
     }
 
     public void setLongtitude(double longtitude) {
-        this.longtitude = longtitude;
+        this.longitude = longtitude;
     }
     public boolean isApproved() {
         return isApproved;
@@ -68,5 +73,14 @@ public class DiveSite {
 
     public void setApproved(boolean approved) {
         this.isApproved = approved;
+    }
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setDiveSite(this);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setDiveSite(null);
     }
 }
