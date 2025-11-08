@@ -72,19 +72,22 @@ public class DiveSiteRestController {
 
     }
     @GetMapping("/{id}/comments")
-    public Set<Comment> getCommentsForSite(@PathVariable int id) {
+    public Set<CommentDto> getCommentsForSite(@PathVariable int id) {
         Set<Comment> comments = diveSiteService.getCommentsForDiveSite(id);
-         Set<CommentDto> commentDtos = comments.stream()
-                .map(commentDtoMapper::toDto)
-                .collect(Collectors.toSet());
-        return comments;
+        return comments.stream()
+               .map(commentDtoMapper::toDto)
+               .collect(Collectors.toSet());
 
     }
     @PostMapping("/{id}/comments")
     public void addCommentToSite(@PathVariable int id, @Valid @RequestBody CommentDto commentDto) {
-        //toDo will need to get user from auth service
-        int userId = 1;
-        Comment comment = commentDtoMapper.fromDto(commentDto, id, userId);
-        diveSiteService.addCommentToDiveSite(comment);
+        try {
+            //toDo will need to get user from auth service
+            int userId = 1;
+            Comment comment = commentDtoMapper.fromDto(commentDto, id, userId);
+            diveSiteService.addCommentToDiveSite(comment);
+        }catch (com.exceptions.EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 }
