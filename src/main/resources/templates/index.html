@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiveFinder - Discover Dive Sites</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🤿 DiveFinder</h1>
+            <p class="subtitle">Discover Amazing Dive Sites Around the World</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+        
+        <div id="site-details" class="site-details hidden">
+            <button class="close-btn" onclick="closeSiteDetails()">×</button>
+            <h2 id="site-name"></h2>
+            <div id="site-description"></div>
+            <div class="site-coordinates">
+                <strong>Coordinates:</strong> 
+                <span id="site-lat"></span>, <span id="site-lng"></span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <!-- Custom JS -->
+    <script th:src="@{/js/map.js}"></script>
+</body>
+</html>
