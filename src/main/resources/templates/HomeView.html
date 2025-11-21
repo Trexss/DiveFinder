@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <head th:replace="~{fragments/PageLayout :: head('About')}">
     <title>About</title>
 </head>
@@ -11,8 +13,35 @@
     <p>
         <strong>DiveFinder</strong> is a social network for sharing dive sites, information about them and reviews.
     </p>
+    <div class="map-wrapper">
+    <div id="map" class="map-container">
+        <script>
+            const map = L.map('map').setView([42.7, 25.4], 7); // center on Bulgaria
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(map);
+        </script>
+
+    </div>
+    </div>
+
 </main>
+
 
 <div th:replace="~{fragments/PageLayout :: footer}"></div>
 </body>
+
+<script>
+    fetch('/api/v1/sites')
+        .then(response => response.json())
+        .then(sites => {
+            sites.forEach(site => {
+                L.marker([site.latitude, site.longitude])
+                    .addTo(map)
+                    .bindPopup(`<b>${site.siteName}</b><br>${site.description}`);
+            });
+        })
+        .catch(err => console.error(err));
+</script>
 </html>

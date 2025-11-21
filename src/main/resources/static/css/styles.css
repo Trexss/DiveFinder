@@ -25,6 +25,17 @@ a {
     margin-right: auto;
     border: 1px solid lightgrey;
 }
+.map-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.map-container {
+    height: 600px;
+    width: 80%;
+    max-width: 1200px;
+}
 
 .header {
     display: table-header-group;
