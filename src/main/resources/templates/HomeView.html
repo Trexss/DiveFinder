@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/PageLayout :: head('About')}">
+    <title>About</title>
+</head>
+<body>
+<div th:replace="~{fragments/PageLayout :: header}"></div>
+
+<main class="body-content">
+    <h2>About the project</h2>
+    <p>
+        <strong>DiveFinder</strong> is a social network for sharing dive sites, information about them and reviews.
+    </p>
+</main>
+
+<div th:replace="~{fragments/PageLayout :: footer}"></div>
+</body>
+</html>

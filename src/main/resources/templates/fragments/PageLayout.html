@@ -1,0 +1,23 @@
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:text="'DiveFinder | ' + ${title}">Title</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<header th:fragment="header">
+    <div>
+        <h3>
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/auth/login}">Login</a>
+            <a th:href="@{/diveSites/new}">Add a dive site</a>
+            <a th:href="@{/about}">About</a>
+            <a th:if="${session.currentUser}" th:href="@{/auth/logout}">Logout</a>
+            <a th:unless="${session.currentUser}" th:href="@{/auth/login}">Login</a>
+            <a th:unless="${session.currentUser}" th:href="@{/auth/register}">Register</a>
+        </h3>
+    </div>
+</header>
+
+<footer th:fragment="footer">
+    <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' DiveFinder'}">DiveFinder</small>
+</footer>
