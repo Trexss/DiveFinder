@@ -23,7 +23,7 @@ public class UserRestController {
     public UserDto getUserById(@PathVariable int id) {
         try{
             User user = userService.findUserById(id);
-            return userDtoMapper.toDto(user);
+            return userDtoMapper.toUserDto(user);
         }catch (com.exceptions.EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -31,10 +31,10 @@ public class UserRestController {
     }
     @PostMapping
         public UserDto createUser (@RequestBody UserDto dto){
-            User user = userDtoMapper.toUser(dto);
+            User user = userDtoMapper.userDtoToUser(dto);
             try {
                 User createdUser = userService.createUser(user);
-                return userDtoMapper.toDto(createdUser);
+                return userDtoMapper.toUserDto(createdUser);
             } catch (EntityDuplicateException e) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
             }

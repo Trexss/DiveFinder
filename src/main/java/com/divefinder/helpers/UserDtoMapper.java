@@ -1,15 +1,14 @@
 package com.divefinder.helpers;
 
 import org.springframework.stereotype.Component;
-import java.util.List;
-import java.util.stream.Collectors;
 import com.divefinder.models.User;
 import com.divefinder.models.UserDto;
+import com.divefinder.models.UserLoginDto;
 
 @Component
 public class UserDtoMapper {
 
-    public UserDto toDto(User user) {
+    public UserDto toUserDto(User user) {
         if (user == null) return null;
         UserDto dto = new UserDto();
 
@@ -22,7 +21,7 @@ public class UserDtoMapper {
     }
 
 
-    public User toUser(UserDto dto) {
+    public User userDtoToUser(UserDto dto) {
         if (dto == null) return null;
         User user = new User();
 
@@ -31,6 +30,24 @@ public class UserDtoMapper {
         user.setPassword(dto.getPassword());
         user.setAdmin(dto.isAdmin());
 
+        return user;
+    }
+
+
+    public UserLoginDto toUserLoginDto(User user) {
+        if (user == null) return null;
+        UserLoginDto dto = new UserLoginDto();
+        dto.setEmail(user.getEmail());
+        dto.setPassword(user.getPassword());
+        return dto;
+    }
+
+
+    public User userLoginDtoToUser(UserLoginDto dto) {
+        if (dto == null) return null;
+        User user = new User();
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
         return user;
     }
 
