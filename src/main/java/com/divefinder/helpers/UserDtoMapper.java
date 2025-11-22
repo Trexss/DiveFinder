@@ -1,5 +1,7 @@
 package com.divefinder.helpers;
 
+import com.divefinder.models.UserRegisterDto;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Component;
 import com.divefinder.models.User;
 import com.divefinder.models.UserDto;
@@ -52,4 +54,16 @@ public class UserDtoMapper {
     }
 
 
+    public User registerDtoToUser(@Valid UserRegisterDto registerDto) {
+        if (registerDto == null) return null;
+        User user = new User();
+
+
+        user.setEmail(registerDto.getEmail());
+        user.setPassword(registerDto.getPassword());
+        user.setFirstName(registerDto.getFirstName());
+        user.setLastName(registerDto.getLastName());
+
+        return user;
+    }
 }

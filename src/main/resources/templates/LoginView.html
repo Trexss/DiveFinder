@@ -21,6 +21,9 @@
         <input type="submit" value="Login"/>
 
     </form>
+    <p2>
+        <a th:unless="${session.currentUser}" th:href="@{/auth/register}">Register Here!</a>
+    </p2>
 </div>
 
 <form th:replace="~{fragments/PageLayout.html :: footer}"></form>

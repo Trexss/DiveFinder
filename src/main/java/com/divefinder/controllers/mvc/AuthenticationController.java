@@ -1,9 +1,12 @@
 package com.divefinder.controllers.mvc;
 
+import com.divefinder.exceptions.EntityDuplicateException;
 import com.divefinder.helpers.AuthenticationHelper;
 import com.divefinder.helpers.UserDtoMapper;
 import com.divefinder.models.User;
+import com.divefinder.models.UserDto;
 import com.divefinder.models.UserLoginDto;
+import com.divefinder.models.UserRegisterDto;
 import com.divefinder.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -41,12 +44,39 @@ public class AuthenticationController {
         try{
             user = userService.findUserByEmail(loginDto.getEmail());
             if (!user.getPassword().equals(loginDto.getPassword())){
-                throw new com.exceptions.AuthorizationException("Username or password incorrect");
-
+                bindingResult.rejectValue("email", "error.auth", null, "Username or password incorrect");
+                return "LoginView";
             }
-        }catch (com.exceptions.EntityNotFoundException | com.exceptions.AuthorizationException e){
-            bindingResult.rejectValue("username", "auth_error", e.getMessage());
+        }catch (Exception e){
+            bindingResult.rejectValue("email", "error.auth", null, "Username or password incorrect");
             return "LoginView";
+        }
+
+
+        session.setAttribute("currentUser", user.getEmail());
+        return "redirect:/";
+    }
+    @GetMapping("/register")
+    public String showRegister(Model model){
+        model.addAttribute("register", new UserRegisterDto());
+        return "RegisterView";
+    }
+    @PostMapping("/register")
+    public String handleRegister(@Valid @ModelAttribute("register") UserRegisterDto registerDto, BindingResult bindingResult, HttpSession session, Model model ){
+
+        if (bindingResult.hasErrors()){
+            return "RegisterView";
+        }
+        if (!registerDto.getPassword().equals(registerDto.getPasswordConfirm())){
+            bindingResult.rejectValue("passwordConfirm", "error.mismatch", null, "Passwords do not match");
+            return "RegisterView";
+        }
+        User user = userMapper.registerDtoToUser(registerDto);
+        try{
+            userService.createUser(user);
+        }catch (EntityDuplicateException e){
+            bindingResult.rejectValue("email", "error.duplicate", null, e.getMessage());
+            return "RegisterView";
         }
 
 

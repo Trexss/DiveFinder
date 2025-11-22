@@ -19,8 +19,8 @@ public class HomeMvcController {
         return "HomeView";
     }
 
-//    @GetMapping("/about")
-//    public String showAboutPage() {
-//        return "HomeView";
-//    }
+    @GetMapping("/about")
+    public String showAboutPage() {
+        return "About";
+    }
 }
