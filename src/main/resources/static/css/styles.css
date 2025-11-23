@@ -105,4 +105,13 @@ a.nav {
 .label-error {
     color: red
 }
+.popup-link {
+    color: #0645AD;              /* normal hyperlink blue */
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.popup-link:hover {
+    color: #003d80;
+}
 

@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class DiveSiteDto {
+    //used only in response from map api calls to generate URL
+        private int id;
 
         @NotNull
         @Size(min = 3, max = 30, message = "Name must be between 3 & 30 symbols")
@@ -17,10 +19,19 @@ public class DiveSiteDto {
         private double longitude;
         private boolean approved = false;
 
+
         public DiveSiteDto() {
         }
 
-        public DiveSiteDto(String siteName, String description, double latitude, double longtitude) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public DiveSiteDto(String siteName, String description, double latitude, double longtitude) {
 
             this.siteName = siteName;
             this.description = description;

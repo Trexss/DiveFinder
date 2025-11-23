@@ -26,6 +26,7 @@ public class DiveSiteDtoMapper {
         dto.setLongitude(site.getLongtitude());
         dto.setSiteName(site.getSiteName());
         dto.setApproved(site.isApproved());
+        dto.setId(site.getId());
         return dto;
 
     }
