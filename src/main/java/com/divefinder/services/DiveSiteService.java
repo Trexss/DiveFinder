@@ -14,4 +14,6 @@ public interface DiveSiteService {
     Set<Comment> getCommentsForDiveSite(int diveSiteId);
 
     void addCommentToDiveSite(Comment comment);
+
+    DiveSite getApprovedSiteById(int id);
 }

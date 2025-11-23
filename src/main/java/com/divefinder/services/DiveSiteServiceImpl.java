@@ -5,6 +5,7 @@ import com.divefinder.models.Comment;
 import com.divefinder.models.DiveSite;
 import com.divefinder.repositories.DiveSiteRepository;
 
+import com.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,5 +74,14 @@ public class DiveSiteServiceImpl implements DiveSiteService {
     @Override
     public void addCommentToDiveSite(Comment comment) {
         commentService.addCommentToDiveSite(comment);
+    }
+
+    @Override
+    public DiveSite getApprovedSiteById(int id) {
+        DiveSite diveSite = diveSiteRepository.getSiteById(id);
+        if (!diveSite.isApproved()){
+            throw new EntityNotFoundException("Dive site ", id);
+        }
+        return diveSite;
     }
 }

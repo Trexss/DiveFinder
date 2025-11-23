@@ -44,7 +44,7 @@ public class DiveSiteRestController {
     @GetMapping("/{id}")
     public DiveSiteDto getSiteById(@PathVariable int id) {
         try {
-            return diveSiteDtoMapper.diveSiteToDto(diveSiteService.getSiteById(id));
+            return diveSiteDtoMapper.diveSiteToDto(diveSiteService.getApprovedSiteById(id));
 
         } catch (com.exceptions.EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
