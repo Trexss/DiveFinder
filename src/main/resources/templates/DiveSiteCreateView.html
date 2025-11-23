@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<head th:replace="~{fragments/PageLayout :: head('Create New')}">
+    <title>Create new Dive Site</title>
+</head>
+<body>
+<form th:replace="~{fragments/PageLayout.html :: header}"></form>
+
+<div class="body-content">
+    <form action="#" th:action="@{__${requestURI}__}" th:object="${diveSite}" method="post">
+        <label th:text="#{diveSite.label.name}">Dive Site</label>
+        <br/>
+        <input type="text" th:field="*{siteName}"/>
+        <label class="error" th:errors="*{siteName}">Name error placeholder</label>
+        <br/><br/>
+
+        <label th:text="#{diveSite.label.description}">Dive Site Description</label>
+        <br/>
+        <input type="text" th:field="*{description}"/>
+        <label class="error" th:errors="*{description}">Description error placeholder</label>
+        <br/><br/>
+<!--        get coordinates from the map through JS -->
+        <input type="hidden" th:field="*{latitude}" id="latitude"/>
+        <input type="hidden" th:field="*{longitude}" id="longitude"/>
+        <div id="map" style="height: 400px; margin-top: 20px;"></div>
+
+
+        <br/><br/>
+
+        <input type="submit" value="Save"/>
+    </form>
+</div>
+
+<form th:replace="~{fragments/PageLayout.html :: footer}"></form>
+</body>
+
+<script>
+    const defaultLat = 42.7;   // Bulgaria center
+    const defaultLng = 25.4;
+
+    const map = L.map('map').setView([defaultLat, defaultLng], 7);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+    }).addTo(map);
+
+    // Create a draggable single marker
+    const marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+
+    // Initialize form fields
+    document.getElementById('latitude').value = defaultLat;
+    document.getElementById('longitude').value = defaultLng;
+
+    // Update fields when marker is dragged
+    marker.on('dragend', function (e) {
+        const lat = e.target.getLatLng().lat;
+        const lng = e.target.getLatLng().lng;
+
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+    });
+
+    // Optional: click on map moves the marker
+    map.on('click', function (e) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        marker.setLatLng([lat, lng]);
+
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+    });
+</script>
+</html>

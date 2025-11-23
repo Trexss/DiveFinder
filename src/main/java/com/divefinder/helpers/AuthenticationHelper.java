@@ -58,14 +58,13 @@ public class AuthenticationHelper {
 
         return userInfo.substring(firstSpace + 1);
     }
-    //toDo will be implemented when MVC auth is implemented
-//    public User tryGetUser(HttpSession session){
-//        String currentUser = (String) session.getAttribute("currentUser");
-//        if (currentUser == null){
-//            throw new com.exceptions.AuthorizationException("No user logged in");
-//        }
-//        return userService.get(currentUser);
-//
-//    }
+
+    public User tryGetUser(HttpSession session){
+        String currentUser = (String) session.getAttribute("currentUser");
+        if (currentUser == null){
+            throw new com.exceptions.AuthorizationException("No user logged in");
+        }
+        return userService.findUserByEmail(currentUser);
+    }
 
 }
