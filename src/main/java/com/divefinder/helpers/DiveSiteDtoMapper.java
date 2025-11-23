@@ -13,7 +13,7 @@ public class DiveSiteDtoMapper {
         DiveSite site = new DiveSite();
         site.setDescription(dto.getDescription());
         site.setLatitude(dto.getLatitude());
-        site.setLongtitude(dto.getLongitude());
+        site.setLongitude(dto.getLongitude());
         site.setSiteName(dto.getSiteName());
         site.setApproved(dto.isApproved());
 
@@ -23,7 +23,7 @@ public class DiveSiteDtoMapper {
         DiveSiteDto dto = new DiveSiteDto();
         dto.setDescription(site.getDescription());
         dto.setLatitude(site.getLatitude());
-        dto.setLongitude(site.getLongtitude());
+        dto.setLongitude(site.getLongitude());
         dto.setSiteName(site.getSiteName());
         dto.setApproved(site.isApproved());
         dto.setId(site.getId());

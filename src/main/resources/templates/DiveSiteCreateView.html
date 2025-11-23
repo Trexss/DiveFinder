@@ -24,7 +24,10 @@
 <!--        get coordinates from the map through JS -->
         <input type="hidden" th:field="*{latitude}" id="latitude"/>
         <input type="hidden" th:field="*{longitude}" id="longitude"/>
-        <div id="map" style="height: 400px; margin-top: 20px;"></div>
+        <br>
+        <div class="map-wrapper">
+            <div id="map" class="map-container"></div>
+        </div>
 
 
         <br/><br/>
@@ -34,43 +37,38 @@
 </div>
 
 <form th:replace="~{fragments/PageLayout.html :: footer}"></form>
-</body>
 
 <script>
-    const defaultLat = 42.7;   // Bulgaria center
-    const defaultLng = 25.4;
+    document.addEventListener('DOMContentLoaded', function () {
+        const defaultLat = 42.7;   // Bulgaria center
+        const defaultLng = 25.4;
 
-    const map = L.map('map').setView([defaultLat, defaultLng], 7);
+        const map = L.map('map').setView([defaultLat, defaultLng], 7);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19
-    }).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
 
-    // Create a draggable single marker
-    const marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+        const marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
 
-    // Initialize form fields
-    document.getElementById('latitude').value = defaultLat;
-    document.getElementById('longitude').value = defaultLng;
+        document.getElementById('latitude').value = defaultLat;
+        document.getElementById('longitude').value = defaultLng;
 
-    // Update fields when marker is dragged
-    marker.on('dragend', function (e) {
-        const lat = e.target.getLatLng().lat;
-        const lng = e.target.getLatLng().lng;
+        marker.on('dragend', function (e) {
+            const lat = e.target.getLatLng().lat;
+            const lng = e.target.getLatLng().lng;
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+        });
 
-        document.getElementById('latitude').value = lat;
-        document.getElementById('longitude').value = lng;
-    });
-
-    // Optional: click on map moves the marker
-    map.on('click', function (e) {
-        const lat = e.latlng.lat;
-        const lng = e.latlng.lng;
-
-        marker.setLatLng([lat, lng]);
-
-        document.getElementById('latitude').value = lat;
-        document.getElementById('longitude').value = lng;
+        map.on('click', function (e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+            marker.setLatLng([lat, lng]);
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+        });
     });
 </script>
+</body>
 </html>

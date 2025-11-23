@@ -30,7 +30,7 @@
 
 
 <div th:replace="~{fragments/PageLayout :: footer}"></div>
-</body>
+
 
 <script>
     fetch('/api/v1/sites')
@@ -48,4 +48,5 @@
         })
         .catch(err => console.error(err));
 </script>
+</body>
 </html>

@@ -1,30 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<form th:replace="~{fragments/PageLayout.html :: head('Dive Site')}"></form>
+
+<head th:replace="~{fragments/PageLayout.html :: head('Dive Site')}"></head>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 <body>
-<form th:replace="~{fragments/PageLayout.html :: header}"></form>
+
+<div th:replace="~{fragments/PageLayout.html :: header}"></div>
 
 <div class="body-content">
 
+    <h2 th:text="#{diveSite.title}">Dive Site</h2>
 
-        <h2 th:text="#{diveSite.title}">Dive Site</h2>
+    <div style="text-align: left;">
+        <p class="margin12">
+            <b th:text="#{diveSite.siteName} + ': '"></b>
+            <span th:text="${diveSite.siteName}"></span>
+        </p>
 
-        <div th:style="text-align">
-            <p class="margin12" th:text="#{diveSite.siteName}  + ': ' +       ${diveSite.getSiteName()}">Name placeholder</p>
-            <p class="margin12" th:text="#{diveSite.siteDescription} + ': ' +      ${diveSite.getDescription()}">Description placeholder</p>
-
-        </div>
-<!--        <h3>-->
-<!--            &lt;!&ndash;    <a href="#" th:href="@{/beers/{id}/update(id=${beer.id})}">Update</a>&ndash;&gt;-->
-<!--            &lt;!&ndash;    <a href="#" th:href="@{/beers/{id}/delete(id=${beer.id})}">Delete</a>&ndash;&gt;-->
-<!--            <a href="#" th:href="@{__${requestURI}__/update}">Update</a>-->
-<!--            <a href="#" th:href="@{__${requestURI}__/delete}">Delete</a>-->
-<!--        </h3>-->
+        <p class="margin12">
+            <b th:text="#{diveSite.siteDescription} + ': '"></b>
+            <span th:text="${diveSite.description}"></span>
+        </p>
     </div>
 
+    <!-- Map container -->
+    <div class="map-wrapper">
+        <div id="map" class="map-container"></div>
+    </div>
 
+    <!-- Map initialization -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
 
+        const lat = /*[[${diveSite.latitude}]]*/ 0;
+        const lon = /*[[${diveSite.longitude}]]*/ 0;
+        const name = /*[[${diveSite.siteName}]]*/ 'Unknown site';
+        const desc = /*[[${diveSite.description}]]*/ '';
 
-<form th:replace="~{fragments/PageLayout.html :: footer}"></form>
+        const map = L.map('map').setView([lat, lon], 11);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        L.marker([lat, lon])
+            .addTo(map)
+            .bindPopup(`<b>${name}</b><br>${desc}`);
+
+        /*]]>*/
+    </script>
+
+</div>
+
+<div th:replace="~{fragments/PageLayout.html :: footer}"></div>
+
 </body>
 </html>

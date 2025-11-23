@@ -60,11 +60,11 @@ public class DiveSite {
         this.latitude = latitude;
     }
 
-    public double getLongtitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongtitude(double longtitude) {
+    public void setLongitude(double longtitude) {
         this.longitude = longtitude;
     }
     public boolean isApproved() {
