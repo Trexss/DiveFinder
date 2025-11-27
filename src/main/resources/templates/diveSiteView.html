@@ -5,6 +5,37 @@
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<style>
+/* Page-specific layout that keeps the map to the right of the description */
+.dive-details-layout-single {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 30px;
+    align-items: stretch;
+}
+.dive-details-layout-single .dive-details-text {
+    flex: 1 1 55%;
+    text-align: left;
+}
+.dive-details-layout-single .dive-details-map {
+    flex: 1 1 45%;
+    display: flex;
+    justify-content: flex-end;
+}
+.dive-details-layout-single .dive-details-map .map-container {
+    width: 100%;
+    max-width: 900px;
+    height: 450px;
+}
+@media (max-width: 900px) {
+    .dive-details-layout-single {
+        flex-direction: column;
+    }
+    .dive-details-layout-single .dive-details-map {
+        justify-content: center;
+    }
+}
+</style>
 
 <body>
 
@@ -14,22 +45,42 @@
 
     <h2 th:text="#{diveSite.title}">Dive Site</h2>
 
-    <div style="text-align: left;">
-        <p class="margin12">
-            <b th:text="#{diveSite.siteName} + ': '"></b>
-            <span th:text="${diveSite.siteName}"></span>
-        </p>
+    <div class="dive-details-layout dive-details-layout-single">
 
-        <p class="margin12">
-            <b th:text="#{diveSite.siteDescription} + ': '"></b>
-            <span th:text="${diveSite.description}"></span>
-        </p>
+        <!-- LEFT SIDE: TEXT -->
+        <div class="dive-details-text">
+            <p class="margin12">
+                <b th:text="#{diveSite.siteName} + ': '"></b>
+                <span th:text="${diveSite.siteName}"></span>
+            </p>
+
+            <p class="margin12">
+                <b th:text="#{diveSite.siteDescription} + ': '"></b>
+                <span th:text="${diveSite.description}"></span>
+            </p>
+        </div>
+
+        <!-- RIGHT SIDE: MAP -->
+        <div class="dive-details-map">
+            <div id="map" class="map-container"></div>
+        </div>
+
+    </div>
+    <div th:if="${diveSite.comments.isEmpty()}">
+        <p th:text="#{comments.empty}">No comments yet</p>
+    </div>
+    <div th:unless="${diveSite.comments.isEmpty()}">
+        <div class="comment" th:each="comment : ${diveSite.comments}">
+            <p class="comment-content" th:text="${comment.commentText}">Comment content here</p>
+            <p class="comment-meta">
+                <span th:text="#{comment.user} + ' ' + ${comment.user.firstName}">By username</span>
+                <span> | </span>
+                <span th:text="#{comment.created-at} + ' ' + ${#temporals.format(comment.dateCreated, 'yyyy-MM-dd HH:mm')}">Posted on date</span>
+            </p>
+            <hr>
+        </div>
     </div>
 
-    <!-- Map container -->
-    <div class="map-wrapper">
-        <div id="map" class="map-container"></div>
-    </div>
 
     <!-- Map initialization -->
     <script th:inline="javascript">

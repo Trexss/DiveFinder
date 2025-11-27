@@ -83,4 +83,12 @@ public class DiveSite {
         comments.remove(comment);
         comment.setDiveSite(null);
     }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 }
