@@ -66,6 +66,18 @@
         </div>
 
     </div>
+    <div id="comment-input" th:if="${session.currentUser != null}">
+        <h3 th:text="#{comments.title}">Add a comment</h3>
+        <form th:action="@{/sites/{id}/comment(id=${diveSite.id})}" th:object="${comment}" method="post">
+            <label>
+                <input type="text" th:field="*{commentText}" placeholder="Enter your comment here">
+            </label>
+            <br>
+            <label class="label-error" th:if="${#fields.hasErrors('commentText')}" th:errors="*{commentText}">Error placeholder</label>
+            <br>
+            <input type="submit" th:value="#{comments.submit}"/>
+        </form>
+    </div>
     <div th:if="${diveSite.comments.isEmpty()}">
         <p th:text="#{comments.empty}">No comments yet</p>
     </div>
@@ -75,7 +87,7 @@
             <p class="comment-meta">
                 <span th:text="#{comment.user} + ' ' + ${comment.user.firstName}">By username</span>
                 <span> | </span>
-                <span th:text="#{comment.created-at} + ' ' + ${#temporals.format(comment.dateCreated, 'yyyy-MM-dd HH:mm')}">Posted on date</span>
+                <span th:text="#{comment.created-at} + ' ' + ${#temporals.format(comment.dateCreated, 'yyyy-MM-dd')}">Posted on date</span>
             </p>
             <hr>
         </div>
