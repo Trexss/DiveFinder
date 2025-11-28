@@ -2,6 +2,7 @@ package com.divefinder.services;
 
 import com.divefinder.models.User;
 import com.divefinder.repositories.UserRepository;
+import com.exceptions.AuthorizationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User findUserById(int id) {
+
         return userRepository.findUserById(id);
     }
 

@@ -1,10 +1,12 @@
 package com.divefinder.controllers.rest;
 
 import com.divefinder.exceptions.EntityDuplicateException;
+import com.divefinder.helpers.AuthenticationHelper;
 import com.divefinder.helpers.UserDtoMapper;
 import com.divefinder.models.User;
 import com.divefinder.models.UserDto;
 import com.divefinder.services.UserService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,18 +16,24 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserRestController {
     private final UserService userService;
     private final UserDtoMapper userDtoMapper;
-    public UserRestController(UserService userService, UserDtoMapper userDtoMapper) {
+    private final AuthenticationHelper authenticationHelper;
+
+    public UserRestController(UserService userService, UserDtoMapper userDtoMapper, AuthenticationHelper authenticationHelper) {
         this.userService = userService;
         this.userDtoMapper = userDtoMapper;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable int id) {
+    public UserDto getUserById(@PathVariable int id, @RequestHeader HttpHeaders headers) {
         try{
+            User requestor = authenticationHelper.tryGetUser(headers);
             User user = userService.findUserById(id);
             return userDtoMapper.toUserDto(user);
         }catch (com.exceptions.EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }catch (com.exceptions.AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
 
     }

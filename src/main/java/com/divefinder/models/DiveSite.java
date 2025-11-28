@@ -20,7 +20,7 @@ public class DiveSite {
     private double longitude;
 
     private boolean isApproved;
-    @OneToMany(mappedBy = "diveSite")
+    @OneToMany(mappedBy = "diveSite", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
 
 

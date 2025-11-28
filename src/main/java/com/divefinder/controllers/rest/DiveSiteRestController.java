@@ -1,15 +1,14 @@
 package com.divefinder.controllers.rest;
 
 import com.divefinder.exceptions.EntityDuplicateException;
+import com.divefinder.helpers.AuthenticationHelper;
 import com.divefinder.helpers.CommentDtoMapper;
 import com.divefinder.helpers.DiveSiteDtoMapper;
-import com.divefinder.models.Comment;
-import com.divefinder.models.CommentDto;
-import com.divefinder.models.DiveSite;
-import com.divefinder.models.DiveSiteDto;
+import com.divefinder.models.*;
 import com.divefinder.services.DiveSiteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,12 +23,14 @@ public class DiveSiteRestController {
     private final DiveSiteService diveSiteService;
     private final DiveSiteDtoMapper diveSiteDtoMapper;
    private final CommentDtoMapper commentDtoMapper;
+   private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public DiveSiteRestController(DiveSiteService diveSiteService, DiveSiteDtoMapper diveSiteDtoMapper, CommentDtoMapper commentDtoMapper) {
+    public DiveSiteRestController(DiveSiteService diveSiteService, DiveSiteDtoMapper diveSiteDtoMapper, CommentDtoMapper commentDtoMapper, AuthenticationHelper authenticationHelper) {
         this.diveSiteService = diveSiteService;
         this.diveSiteDtoMapper = diveSiteDtoMapper;
         this.commentDtoMapper = commentDtoMapper;
+        this.authenticationHelper = authenticationHelper;
     }
     //toDo make errors trace show up in postman
 
@@ -52,23 +53,28 @@ public class DiveSiteRestController {
     }
 
     @PostMapping
-    public DiveSiteDto createSite(@Valid @RequestBody DiveSiteDto dto) {
+    public DiveSiteDto createSite(@Valid @RequestBody DiveSiteDto dto, @RequestHeader HttpHeaders headers) {
         DiveSite diveSite = diveSiteDtoMapper.diveSiteDtoToDiveSite(dto);
         try {
+            User user = authenticationHelper.tryGetUser(headers);
             DiveSite createdSite = diveSiteService.createDiveSite(diveSite);
             return diveSiteDtoMapper.diveSiteToDto(createdSite);
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-
+        }catch (com.exceptions.AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSite(@PathVariable int id) {
+    public void deleteSite(@PathVariable int id, @RequestHeader HttpHeaders headers) {
         try {
-            diveSiteService.deleteDiveSite(id);
+            User user = authenticationHelper.tryGetUser(headers);
+            diveSiteService.deleteDiveSite(id, user);
         } catch (com.exceptions.EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }catch (com.exceptions.AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
 
     }
@@ -87,14 +93,16 @@ public class DiveSiteRestController {
 
     }
     @PostMapping("/{id}/comments")
-    public void addCommentToSite(@PathVariable int id, @Valid @RequestBody CommentDto commentDto) {
+    public void addCommentToSite(@PathVariable int id, @Valid @RequestBody CommentDto commentDto, @RequestHeader HttpHeaders headers) {
         try {
-            //toDo will need to get user from auth service
-            int userId = 1;
+            User user = authenticationHelper.tryGetUser(headers);
+            int userId = user.getId();
             Comment comment = commentDtoMapper.fromDto(commentDto, id, userId);
             diveSiteService.addCommentToDiveSite(comment);
         }catch (com.exceptions.EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }catch (com.exceptions.AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 }

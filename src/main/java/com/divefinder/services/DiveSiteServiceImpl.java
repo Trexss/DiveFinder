@@ -3,8 +3,10 @@ package com.divefinder.services;
 import com.divefinder.exceptions.EntityDuplicateException;
 import com.divefinder.models.Comment;
 import com.divefinder.models.DiveSite;
+import com.divefinder.models.User;
 import com.divefinder.repositories.DiveSiteRepository;
 
+import com.exceptions.AuthorizationException;
 import com.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +50,10 @@ public class DiveSiteServiceImpl implements DiveSiteService {
 
     @Override
     @Transactional
-    public void deleteDiveSite(int id) {
+    public void deleteDiveSite(int id, User user) {
+        if (!user.isAdmin()){
+            throw new AuthorizationException("Only admins are authorized to delete a dive site");
+        }
         try {
             // checks if DiveSite exists
             diveSiteRepository.getSiteById(id);
