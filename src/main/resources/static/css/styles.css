@@ -98,6 +98,9 @@ header h3 {
     color: var(--white);
     text-decoration: none;
     letter-spacing: 1px;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
 .nav-links {
@@ -546,6 +549,11 @@ button[type="submit"]:hover {
     text-align: center;
 }
 
+.error-icon {
+    font-size: 80px;
+    margin-bottom: 16px;
+}
+
 .error-code {
     font-size: 6rem;
     font-weight: 700;
@@ -558,6 +566,11 @@ button[type="submit"]:hover {
     font-size: 1.5rem;
     color: var(--text-secondary);
     margin: 16px 0 32px;
+}
+
+.error-details {
+    color: var(--medium-gray);
+    margin-bottom: 32px;
 }
 
 /* Admin Status Badge */
@@ -647,4 +660,109 @@ button[type="submit"]:hover {
 .leaflet-popup-content b {
     color: var(--ocean-deep);
     font-size: 16px;
+}
+
+/* Additional Utility Classes */
+
+/* Link emphasis for CTAs */
+.link-emphasis {
+    font-weight: 600;
+}
+
+/* Detail section styles for dive site view */
+.detail-heading {
+    margin-top: 0;
+    color: var(--ocean-deep);
+}
+
+.detail-label {
+    color: var(--ocean-primary);
+    font-weight: 600;
+}
+
+.detail-value {
+    font-size: 18px;
+}
+
+.detail-description {
+    line-height: 1.7;
+}
+
+/* Coordinates display */
+.coordinates-label {
+    color: var(--ocean-primary);
+    font-weight: 600;
+}
+
+/* Section headings */
+.section-heading {
+    color: var(--ocean-deep);
+}
+
+.section-subheading {
+    margin-top: 0;
+    color: var(--ocean-primary);
+}
+
+/* Card content styles */
+.card-heading {
+    color: var(--ocean-deep);
+    margin-top: 0;
+}
+
+.card-text {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.card-section-heading {
+    color: var(--ocean-deep);
+    margin-top: 32px;
+}
+
+.feature-list {
+    color: var(--text-secondary);
+    line-height: 2;
+    font-size: 16px;
+    padding-left: 24px;
+}
+
+/* Call to action box */
+.cta-box {
+    text-align: center;
+    margin-top: 32px;
+    padding: 24px;
+    background: var(--ocean-foam);
+    border-radius: var(--border-radius-lg);
+}
+
+.cta-text {
+    margin: 0;
+    color: var(--ocean-deep);
+    font-size: 18px;
+}
+
+/* Helper text */
+.helper-text {
+    font-size: 14px;
+    color: var(--medium-gray);
+    margin-bottom: 16px;
+}
+
+/* Form help note */
+.form-note {
+    margin-top: 24px;
+    color: var(--medium-gray);
+}
+
+/* Map container small variant */
+.map-container-sm {
+    height: 400px;
+}
+
+/* Button link hybrid for error page */
+.btn-link {
+    text-decoration: none;
+    color: var(--white);
 }

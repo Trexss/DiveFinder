@@ -27,7 +27,7 @@
 
             <div class="form-group">
                 <label>📌 Select Location on Map</label>
-                <p style="font-size: 14px; color: #6c757d; margin-bottom: 16px;">
+                <p class="helper-text">
                     Click on the map or drag the marker to set the exact location of the dive site.
                 </p>
             </div>
@@ -36,8 +36,8 @@
             <input type="hidden" th:field="*{latitude}" id="latitude"/>
             <input type="hidden" th:field="*{longitude}" id="longitude"/>
             
-            <div class="map-wrapper" style="margin-bottom: 24px;">
-                <div id="map" class="map-container" style="height: 400px;"></div>
+            <div class="map-wrapper">
+                <div id="map" class="map-container map-container-sm"></div>
             </div>
 
             <input type="submit" value="🚀 Save Dive Site"/>

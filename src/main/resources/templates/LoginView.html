@@ -26,9 +26,9 @@
             <input type="submit" value="🚀 Login"/>
         </form>
         
-        <p style="margin-top: 24px; color: #6c757d;">
+        <p class="form-note">
             Don't have an account?
-            <a th:unless="${session.currentUser}" th:href="@{/auth/register}" style="font-weight: 600;">Register Here!</a>
+            <a th:unless="${session.currentUser}" th:href="@{/auth/register}" class="link-emphasis">Register Here!</a>
         </p>
     </div>
 </div>

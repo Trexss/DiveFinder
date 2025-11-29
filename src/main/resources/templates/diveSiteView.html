@@ -15,20 +15,20 @@
 
         <!-- LEFT SIDE: TEXT -->
         <div class="dive-details-text">
-            <h3 style="margin-top: 0; color: #003459;">📋 Site Details</h3>
+            <h3 class="detail-heading">📋 Site Details</h3>
             
             <p class="margin12">
-                <b style="color: #0077B6;">Site Name:</b><br>
-                <span th:text="${diveSite.siteName}" style="font-size: 18px;"></span>
+                <b class="detail-label">Site Name:</b><br>
+                <span th:text="${diveSite.siteName}" class="detail-value"></span>
             </p>
 
             <p class="margin12">
-                <b style="color: #0077B6;">Description:</b><br>
-                <span th:text="${diveSite.description}" style="line-height: 1.7;"></span>
+                <b class="detail-label">Description:</b><br>
+                <span th:text="${diveSite.description}" class="detail-description"></span>
             </p>
             
             <p class="margin12">
-                <b style="color: #0077B6;">📍 Coordinates:</b><br>
+                <b class="coordinates-label">📍 Coordinates:</b><br>
                 <span th:text="${diveSite.latitude}"></span>, <span th:text="${diveSite.longitude}"></span>
             </p>
         </div>
@@ -42,23 +42,23 @@
     
     <!-- Comments Section -->
     <div class="comments-section">
-        <h3 style="color: #003459;">💬 Comments &amp; Reviews</h3>
+        <h3 class="section-heading">💬 Comments &amp; Reviews</h3>
         
         <!-- Comment Input Form -->
         <div id="comment-input" th:if="${session.currentUser != null}">
-            <h4 style="margin-top: 0; color: #0077B6;" th:text="#{comments.title}">Share Your Experience</h4>
+            <h4 th:text="#{comments.title}" class="section-subheading">Share Your Experience</h4>
             <form th:action="@{/sites/{id}/comment(id=${diveSite.id})}" th:object="${comment}" method="post">
                 <div class="form-group">
                     <input type="text" th:field="*{commentText}" placeholder="Share your diving experience at this site..."/>
                     <span class="label-error" th:if="${#fields.hasErrors('commentText')}" th:errors="*{commentText}"></span>
                 </div>
-                <input type="submit" th:value="#{comments.submit}" style="margin-top: 8px;"/>
+                <input type="submit" th:value="#{comments.submit}"/>
             </form>
         </div>
         
         <!-- No Comments Message -->
-        <div th:if="${diveSite.comments.isEmpty()}" class="card" style="text-align: center; max-width: 100%;">
-            <p style="margin: 0; color: #6c757d;">
+        <div th:if="${diveSite.comments.isEmpty()}" class="card text-center">
+            <p class="cta-text">
                 🐠 <span th:text="#{comments.empty}">No comments yet. Be the first to share your experience!</span>
             </p>
         </div>
