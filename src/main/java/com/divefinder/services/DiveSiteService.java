@@ -17,4 +17,7 @@ public interface DiveSiteService {
     void addCommentToDiveSite(Comment comment);
 
     DiveSite getApprovedSiteById(int id);
+
+    List<DiveSite> getAllUnapprovedSites();
+    void approveDiveSite(int id, User user);
 }

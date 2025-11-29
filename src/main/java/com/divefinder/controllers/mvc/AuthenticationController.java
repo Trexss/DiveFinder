@@ -54,6 +54,7 @@ public class AuthenticationController {
 
 
         session.setAttribute("currentUser", user.getEmail());
+        session.setAttribute("isAdmin", user.isAdmin());
         return "redirect:/";
     }
     @GetMapping("/register")
@@ -81,6 +82,7 @@ public class AuthenticationController {
 
 
         session.setAttribute("currentUser", user.getEmail());
+        session.setAttribute("isAdmin", user.isAdmin());
         return "redirect:/";
     }
     @GetMapping("/logout")

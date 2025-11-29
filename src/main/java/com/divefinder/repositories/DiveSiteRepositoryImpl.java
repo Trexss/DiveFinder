@@ -65,4 +65,17 @@ public class DiveSiteRepositoryImpl implements DiveSiteRepository{
             return diveSite;
 
     }
+
+    @Override
+    public List<DiveSite> getAllUnapprovedSites() {
+        Session session = sessionFactory.getCurrentSession();
+            Query<DiveSite> query = session.createQuery("from DiveSite where isApproved = false", DiveSite.class);
+            return query.list();
+    }
+
+    @Override
+    public void updateDiveSite(DiveSite diveSite) {
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(diveSite);
+    }
 }

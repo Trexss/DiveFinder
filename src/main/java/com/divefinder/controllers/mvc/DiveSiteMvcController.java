@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/sites")
 public class DiveSiteMvcController {
     private final DiveSiteService diveSiteService;
-    private final UserService userService;
     private final DiveSiteDtoMapper diveSiteDtoMapper;
     private final AuthenticationHelper authenticationHelper;
     private final CommentDtoMapper commentDtoMapper;
 
 
-    public DiveSiteMvcController(DiveSiteService diveSiteService, UserService userService, DiveSiteDtoMapper diveSiteDtoMapper, AuthenticationHelper authenticationHelper, CommentDtoMapper commentDtoMapper) {
-        this.userService = userService;
+    public DiveSiteMvcController(DiveSiteService diveSiteService, DiveSiteDtoMapper diveSiteDtoMapper, AuthenticationHelper authenticationHelper, CommentDtoMapper commentDtoMapper) {
         this.diveSiteDtoMapper = diveSiteDtoMapper;
         this.authenticationHelper = authenticationHelper;
         this.diveSiteService = diveSiteService;
@@ -45,6 +43,7 @@ public class DiveSiteMvcController {
             return "ErrorView";
         }
     }
+
     @GetMapping("/new")
     public String showCreateDiveSiteForm(Model model, HttpSession session) {
         User user;

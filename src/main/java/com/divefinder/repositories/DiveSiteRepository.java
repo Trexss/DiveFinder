@@ -10,4 +10,8 @@ public interface DiveSiteRepository {
     DiveSite createDiveSite(DiveSite diveSite);
     void deleteDiveSite(int id);
     DiveSite getDiveSiteByName(String name);
+
+    List<DiveSite> getAllUnapprovedSites();
+
+    void updateDiveSite(DiveSite diveSite);
 }

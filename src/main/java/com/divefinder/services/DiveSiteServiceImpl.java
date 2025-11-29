@@ -89,4 +89,21 @@ public class DiveSiteServiceImpl implements DiveSiteService {
         }
         return diveSite;
     }
+
+    @Override
+    @Transactional
+    public List<DiveSite> getAllUnapprovedSites() {
+        return diveSiteRepository.getAllUnapprovedSites();
+    }
+
+    @Override
+    @Transactional
+    public void approveDiveSite(int id, User user) {
+        if (!user.isAdmin()){
+            throw new AuthorizationException("Not authorized to approve dive sites");
+        }
+        DiveSite diveSite = diveSiteRepository.getSiteById(id);
+        diveSite.setApproved(true);
+        diveSiteRepository.updateDiveSite(diveSite);
+    }
 }

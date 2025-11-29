@@ -12,6 +12,8 @@
             <a th:href="@{/sites/new}">Add a dive site</a>
             <a th:href="@{/about}">About</a>
             <a th:if="${session.currentUser}" th:href="@{/auth/logout}">Logout</a>
+            <a th:if="${session.currentUser != null and session.isAdmin}" th:href="@{/admin}">Admin View</a>
+
 
         </h3>
     </div>
