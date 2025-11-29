@@ -1,47 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>RegisterView</title>
-    <form th:replace="~{fragments/PageLayout.html :: head('Home')}"></form>
-
+<head th:replace="~{fragments/PageLayout.html :: head('Register')}">
+    <title>Register</title>
 </head>
 <body>
-<form th:replace="~{fragments/PageLayout.html :: header}"></form>
-<div class="body-content">
-    <h2>Login Page</h2>
-    <form th:action="@{/auth/register}" th:object="${register}" method="post">
-        <label>Email:</label>
-        <br>
-        <input type="text" th:field="*{email}"/>
-        <label class="label-error" th:errors="*{email}">Error placeholder </label>
-        <br>
-        <label>Password</label>
-        <br>
-        <input type="password" th:field="*{password}"/>
-        <label class="label-error" th:errors="*{password}">Error placeholder </label>
-        <br><br>
-        <label>Confirm Password</label>
-        <br>
-        <input type="password" th:field="*{passwordConfirm}"/>
-        <label class="label-error" th:errors="*{passwordConfirm}">Error placeholder </label>
-        <br><br>
-        <label>First Name</label>
-        <br>
-        <input type="text" th:field="*{firstName}"/>
-        <label class="label-error" th:errors="*{firstName}">Error placeholder </label>
-        <br><br>
-        <label>Last Name</label>
-        <br>
-        <input type="text" th:field="*{lastName}"/>
-        <label class="label-error" th:errors="*{lastName}">Error placeholder </label>
-        <br><br>
-        <input type="submit" value="Register"/>
+<div th:replace="~{fragments/PageLayout.html :: header}"></div>
 
-    </form>
+<div class="body-content">
+    <h2>🤿 Join DiveFinder</h2>
+    
+    <div class="card">
+        <form th:action="@{/auth/register}" th:object="${register}" method="post">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" th:field="*{email}" placeholder="Enter your email"/>
+                <span class="label-error" th:errors="*{email}"></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" th:field="*{password}" placeholder="Create a password"/>
+                <span class="label-error" th:errors="*{password}"></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="passwordConfirm">Confirm Password</label>
+                <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" placeholder="Confirm your password"/>
+                <span class="label-error" th:errors="*{passwordConfirm}"></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" th:field="*{firstName}" placeholder="Your first name"/>
+                <span class="label-error" th:errors="*{firstName}"></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" th:field="*{lastName}" placeholder="Your last name"/>
+                <span class="label-error" th:errors="*{lastName}"></span>
+            </div>
+            
+            <input type="submit" value="🚀 Create Account"/>
+        </form>
+        
+        <p style="margin-top: 24px; color: #6c757d;">
+            Already have an account?
+            <a th:href="@{/auth/login}" style="font-weight: 600;">Login Here!</a>
+        </p>
+    </div>
 </div>
 
-<form th:replace="~{fragments/PageLayout.html :: footer}"></form>
+<div th:replace="~{fragments/PageLayout.html :: footer}"></div>
 </body>
 </html>
