@@ -4,28 +4,28 @@
     <title>Login</title>
 </head>
 <body>
-<form th:replace="~{fragments/PageLayout.html :: header}"></form>
+<div th:replace="~{fragments/PageLayout.html :: header}"></div>
 <div class="body-content">
-    <h2>Login Page</h2>
-    <form th:action="@{/auth/login}" th:object="${login}" method="post">
-        <label>Email:</label>
-        <br>
-        <input type="text" th:field="*{email}"/>
-        <label class="label-error" th:errors="*{email}">Error placeholder </label>
-        <br>
-        <label>Password</label>
-        <br>
-        <input type="password" th:field="*{password}"/>
-        <label class="label-error" th:errors="*{password}">Error placeholder </label>
-        <br><br>
-        <input type="submit" value="Login"/>
-
-    </form>
-    <p2>
-        <a th:unless="${session.currentUser}" th:href="@{/auth/register}">Register Here!</a>
-    </p2>
+    <h2>🔐 Login to DiveFinder</h2>
+    <div class="card" style="max-width: 450px; margin: 2rem auto;">
+        <form th:action="@{/auth/login}" th:object="${login}" method="post">
+            <label for="email">Email Address</label>
+            <input type="text" id="email" th:field="*{email}" placeholder="Enter your email"/>
+            <label class="label-error" th:errors="*{email}">Error placeholder</label>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}" placeholder="Enter your password"/>
+            <label class="label-error" th:errors="*{password}">Error placeholder</label>
+            
+            <input type="submit" value="Sign In"/>
+        </form>
+        <p style="text-align: center; margin-top: 1.5rem;">
+            Don't have an account?
+            <a th:unless="${session.currentUser}" th:href="@{/auth/register}">Register Here!</a>
+        </p>
+    </div>
 </div>
 
-<form th:replace="~{fragments/PageLayout.html :: footer}"></form>
+<div th:replace="~{fragments/PageLayout.html :: footer}"></div>
 </body>
 </html>

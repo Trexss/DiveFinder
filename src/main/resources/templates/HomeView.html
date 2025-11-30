@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/PageLayout :: head('Home')}">
+    <title>Home</title>
+</head>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<head th:replace="~{fragments/PageLayout :: head('About')}">
-    <title>About</title>
-</head>
 <body>
 <div th:replace="~{fragments/PageLayout :: header}"></div>
 
 <main class="body-content">
-    <h2>Welcome to DiveFinder</h2>
+    <h2>🌊 Welcome to DiveFinder</h2>
     <p>
-        Explore dive sites and get inspiration about your upcoming dive trip!
+        Explore dive sites around the world and get inspiration for your next underwater adventure!
+        Click on any marker to discover amazing dive locations.
     </p>
     <div class="map-wrapper">
-    <div id="map" class="map-container">
-        <script>
-            const map = L.map('map').setView([42.7, 25.4], 7); // center on Bulgaria
+        <div id="map" class="map-container">
+            <script>
+                const map = L.map('map').setView([42.7, 25.4], 7); // center on Bulgaria
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19
-            }).addTo(map);
-        </script>
-
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19
+                }).addTo(map);
+            </script>
+        </div>
     </div>
-    </div>
-
 </main>
 
 

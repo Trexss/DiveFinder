@@ -10,12 +10,17 @@
 .dive-details-layout-single {
     display: flex;
     flex-wrap: nowrap;
-    gap: 30px;
+    gap: 2rem;
     align-items: stretch;
+    margin: 2rem 0;
 }
 .dive-details-layout-single .dive-details-text {
     flex: 1 1 55%;
     text-align: left;
+    background: var(--white, #ffffff);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 119, 190, 0.1);
 }
 .dive-details-layout-single .dive-details-map {
     flex: 1 1 45%;
@@ -26,6 +31,10 @@
     width: 100%;
     max-width: 900px;
     height: 450px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 119, 190, 0.1);
+    border: 3px solid #0077be;
 }
 @media (max-width: 900px) {
     .dive-details-layout-single {
@@ -43,19 +52,19 @@
 
 <div class="body-content">
 
-    <h2 th:text="#{diveSite.title}">Dive Site</h2>
+    <h2>🤿 <span th:text="${diveSite.siteName}">Dive Site</span></h2>
 
     <div class="dive-details-layout dive-details-layout-single">
 
         <!-- LEFT SIDE: TEXT -->
         <div class="dive-details-text">
             <p class="margin12">
-                <b th:text="#{diveSite.siteName} + ': '"></b>
+                <b>📍 Site Name: </b>
                 <span th:text="${diveSite.siteName}"></span>
             </p>
 
             <p class="margin12">
-                <b th:text="#{diveSite.siteDescription} + ': '"></b>
+                <b>📝 Description: </b>
                 <span th:text="${diveSite.description}"></span>
             </p>
         </div>
@@ -66,30 +75,31 @@
         </div>
 
     </div>
+    
     <div id="comment-input" th:if="${session.currentUser != null}">
-        <h3 th:text="#{comments.title}">Add a comment</h3>
+        <h3 th:text="#{comments.title}">💬 Add a comment</h3>
         <form th:action="@{/sites/{id}/comment(id=${diveSite.id})}" th:object="${comment}" method="post">
-            <label>
-                <input type="text" th:field="*{commentText}" placeholder="Enter your comment here">
-            </label>
-            <br>
+            <label for="commentText">Share your experience at this dive site:</label>
+            <input type="text" id="commentText" th:field="*{commentText}" placeholder="Enter your comment here"/>
             <label class="label-error" th:if="${#fields.hasErrors('commentText')}" th:errors="*{commentText}">Error placeholder</label>
-            <br>
             <input type="submit" th:value="#{comments.submit}"/>
         </form>
     </div>
-    <div th:if="${diveSite.comments.isEmpty()}">
-        <p th:text="#{comments.empty}">No comments yet</p>
-    </div>
-    <div th:unless="${diveSite.comments.isEmpty()}">
-        <div class="comment" th:each="comment : ${diveSite.comments}">
-            <p class="comment-content" th:text="${comment.commentText}">Comment content here</p>
-            <p class="comment-meta">
-                <span th:text="#{comment.user} + ' ' + ${comment.user.firstName}">By username</span>
-                <span> | </span>
-                <span th:text="#{comment.created-at} + ' ' + ${#temporals.format(comment.dateCreated, 'yyyy-MM-dd')}">Posted on date</span>
-            </p>
-            <hr>
+    
+    <div style="max-width: 800px; margin: 2rem auto;">
+        <h3 style="margin-bottom: 1.5rem;">💬 Comments</h3>
+        <div th:if="${diveSite.comments.isEmpty()}">
+            <p th:text="#{comments.empty}" style="color: var(--text-muted, #6c757d);">No comments yet. Be the first to share your experience!</p>
+        </div>
+        <div th:unless="${diveSite.comments.isEmpty()}">
+            <div class="comment" th:each="comment : ${diveSite.comments}">
+                <p class="comment-content" th:text="${comment.commentText}">Comment content here</p>
+                <p class="comment-meta">
+                    <span th:text="#{comment.user} + ' ' + ${comment.user.firstName}">By username</span>
+                    <span> | </span>
+                    <span th:text="#{comment.created-at} + ' ' + ${#temporals.format(comment.dateCreated, 'yyyy-MM-dd')}">Posted on date</span>
+                </p>
+            </div>
         </div>
     </div>
 

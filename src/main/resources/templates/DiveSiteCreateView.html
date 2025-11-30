@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <head th:replace="~{fragments/PageLayout :: head('Create New')}">
     <title>Create new Dive Site</title>
 </head>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <body>
-<form th:replace="~{fragments/PageLayout.html :: header}"></form>
+<div th:replace="~{fragments/PageLayout.html :: header}"></div>
 
 <div class="body-content">
-    <form action="#" th:action="@{__${requestURI}__}" th:object="${diveSite}" method="post">
-        <label th:text="#{diveSite.label.name}">Dive Site</label>
-        <br/>
-        <input type="text" th:field="*{siteName}"/>
-        <label class="error" th:errors="*{siteName}">Name error placeholder</label>
-        <br/><br/>
+    <h2>➕ Add a New Dive Site</h2>
+    <p style="margin-bottom: 2rem; color: var(--text-muted);">Share your favorite dive location with the community. Click on the map to set the location.</p>
+    
+    <div class="card" style="max-width: 700px; margin: 0 auto 2rem;">
+        <form action="#" th:action="@{__${requestURI}__}" th:object="${diveSite}" method="post">
+            <label for="siteName" th:text="#{diveSite.label.name}">Dive Site Name</label>
+            <input type="text" id="siteName" th:field="*{siteName}" placeholder="Enter dive site name"/>
+            <label class="error" th:errors="*{siteName}">Name error placeholder</label>
 
-        <label th:text="#{diveSite.label.description}">Dive Site Description</label>
-        <br/>
-        <input type="text" th:field="*{description}"/>
-        <label class="error" th:errors="*{description}">Description error placeholder</label>
-        <br/><br/>
-<!--        get coordinates from the map through JS -->
-        <input type="hidden" th:field="*{latitude}" id="latitude"/>
-        <input type="hidden" th:field="*{longitude}" id="longitude"/>
-        <br>
-        <div class="map-wrapper">
-            <div id="map" class="map-container"></div>
-        </div>
+            <label for="description" th:text="#{diveSite.label.description}">Dive Site Description</label>
+            <input type="text" id="description" th:field="*{description}" placeholder="Describe this dive site"/>
+            <label class="error" th:errors="*{description}">Description error placeholder</label>
 
+            <!-- Get coordinates from the map through JS -->
+            <input type="hidden" th:field="*{latitude}" id="latitude"/>
+            <input type="hidden" th:field="*{longitude}" id="longitude"/>
 
-        <br/><br/>
+            <label style="margin-top: 1rem;">📍 Select Location on Map</label>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Click anywhere on the map or drag the marker to set the dive site location.</p>
+            
+            <div class="map-wrapper" style="padding: 0;">
+                <div id="map" class="map-container" style="height: 400px; border-radius: 12px;"></div>
+            </div>
 
-        <input type="submit" value="Save"/>
-    </form>
+            <input type="submit" value="Save Dive Site" style="margin-top: 1.5rem;"/>
+        </form>
+    </div>
 </div>
 
-<form th:replace="~{fragments/PageLayout.html :: footer}"></form>
+<div th:replace="~{fragments/PageLayout.html :: footer}"></div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

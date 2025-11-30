@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<form th:replace="~{fragments/PageLayout.html :: head('About')}"></form>
+<head th:replace="~{fragments/PageLayout.html :: head('About')}">
+    <title>About</title>
+</head>
 <body>
-<form th:replace="~{fragments/PageLayout.html :: header}"></form>
+<div th:replace="~{fragments/PageLayout.html :: header}"></div>
 
 <div class="body-content">
-    <h2>About the project</h2>
+    <h2>ℹ️ About DiveFinder</h2>
     <p>
-        <b>DiveFinder</b> is a place to share your favorite dive sites and guide others on the best ways to explore them and
-        to get inspiration for your upcoming dive trips.
+        <b>DiveFinder</b> is your ultimate destination to share and discover amazing dive sites from around the world.
+        Whether you're a seasoned diver or just starting your underwater journey, our community-driven platform helps you
+        find the perfect spots and guides you on the best ways to explore them.
+    </p>
+    <p>
+        Join our community of diving enthusiasts and start planning your next underwater adventure today!
     </p>
 </div>
 
-<form th:replace="~{fragments/PageLayout.html :: footer}"></form>
+<div th:replace="~{fragments/PageLayout.html :: footer}"></div>
 </body>
 </html>

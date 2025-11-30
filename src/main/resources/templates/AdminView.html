@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/PageLayout :: head('Login')}">
-    <title>Login</title>
+<head th:replace="~{fragments/PageLayout :: head('Admin')}">
+    <title>Admin</title>
 </head>
 <body>
-<form th:replace="~{fragments/PageLayout.html :: header}"></form>
+<div th:replace="~{fragments/PageLayout.html :: header}"></div>
 <div class="body-content">
-    <h2>Admin View</h2>
+    <h2>⚙️ Admin Dashboard</h2>
     <div th:if="${diveSites.isEmpty()}">
-        <h2 th:text="#{diveSites.title.empty}">No dive sites to review</h2>
+        <div class="card" style="max-width: 600px; margin: 2rem auto;">
+            <p th:text="#{diveSites.title.empty}" style="font-size: 1.1rem; color: var(--text-muted);">No dive sites to review</p>
+        </div>
     </div>
     <div th:unless="${diveSites.isEmpty()}">
-        <h2 th:text="#{diveSites.title}">All dive Sites</h2>
+        <p style="margin-bottom: 2rem; color: var(--text-muted);" th:text="#{diveSites.title}">All dive Sites</p>
 
         <div class="table">
             <div class="header">
                 <div class="header-cell" th:text="#{diveSite.label.name}">Name</div>
                 <div class="header-cell" th:text="#{diveSite.siteDescription}">Description</div>
-
+                <div class="header-cell">Actions</div>
             </div>
-            <div class="row" th:each="diveSite : ${diveSites}">
-                <div class="cell">
-                    <a href="#" th:href="@{/sites/{id}(id=${diveSite.id})}" th:text="${diveSite.description}">Dive site</a>
-                </div>
-                <div class="cell" th:text="${diveSite.description}">Description</div>
-                <div class="cell">
-                    <form th:action="@{/admin/{id}/approve(id=${diveSite.id})}" method="post"
-                          th:if="${session.currentUser != null and session.isAdmin and not diveSite.approved}">
-                        <input type="hidden" name="_method" value="put" />
-                        <button type="submit">Approve</button>
-                    </form>
-                    <span th:if="${diveSite.approved}" th:text="#{diveSite.status.approved}">Approved</span>
+            <div class="rowGroup">
+                <div class="row" th:each="diveSite : ${diveSites}">
+                    <div class="cell">
+                        <a href="#" th:href="@{/sites/{id}(id=${diveSite.id})}" th:text="${diveSite.siteName}">Dive site</a>
+                    </div>
+                    <div class="cell" th:text="${diveSite.description}">Description</div>
+                    <div class="cell">
+                        <form th:action="@{/admin/{id}/approve(id=${diveSite.id})}" method="post"
+                              th:if="${session.currentUser != null and session.isAdmin and not diveSite.approved}">
+                            <input type="hidden" name="_method" value="put" />
+                            <button type="submit" class="btn-primary">✓ Approve</button>
+                        </form>
+                        <span th:if="${diveSite.approved}" style="color: var(--success); font-weight: 600;" th:text="#{diveSite.status.approved}">Approved</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<form th:replace="~{fragments/PageLayout.html :: footer}"></form>
+<div th:replace="~{fragments/PageLayout.html :: footer}"></div>
 </body>
 </html>

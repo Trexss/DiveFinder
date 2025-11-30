@@ -1,24 +1,26 @@
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="'DiveFinder | ' + ${title}">Title</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <header th:fragment="header">
     <div>
         <h3>
-            <a th:href="@{/}">Home</a>
-            <a th:unless="${session.currentUser}" th:href="@{/auth/login}">Login</a>
-            <a th:href="@{/sites/new}">Add a dive site</a>
-            <a th:href="@{/about}">About</a>
-            <a th:if="${session.currentUser}" th:href="@{/auth/logout}">Logout</a>
-            <a th:if="${session.currentUser != null and session.isAdmin}" th:href="@{/admin}">Admin View</a>
-
-
+            <a th:href="@{/}">🏠 Home</a>
+            <a th:unless="${session.currentUser}" th:href="@{/auth/login}">🔐 Login</a>
+            <a th:href="@{/sites/new}">➕ Add Dive Site</a>
+            <a th:href="@{/about}">ℹ️ About</a>
+            <a th:if="${session.currentUser}" th:href="@{/auth/logout}">🚪 Logout</a>
+            <a th:if="${session.currentUser != null and session.isAdmin}" th:href="@{/admin}">⚙️ Admin</a>
         </h3>
     </div>
 </header>
 
 <footer th:fragment="footer">
-    <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' DiveFinder'}">DiveFinder</small>
+    <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' DiveFinder — Discover Your Next Dive Adventure'}">DiveFinder</small>
 </footer>

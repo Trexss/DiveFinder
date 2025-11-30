@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<form th:replace="~{fragments/PageLayout.html :: head('Error Page')}"></form>
+<head th:replace="~{fragments/PageLayout.html :: head('Error Page')}">
+    <title>Error</title>
+</head>
 <body>
-<form th:replace="~{fragments/PageLayout.html :: header}"></form>
+<div th:replace="~{fragments/PageLayout.html :: header}"></div>
 
 <div class="body-content">
-    <h2 class="label-error" th:text="${statusCode}">HTTP Status Code</h2>
-    <h3 class="error" th:text="${error}">Error placeholder</h3>
+    <div class="card" style="max-width: 600px; margin: 3rem auto; text-align: center;">
+        <h2 style="color: var(--danger); font-size: 4rem; margin-bottom: 1rem;" th:text="${statusCode}">404</h2>
+        <h3 class="error" th:text="${error}" style="margin-bottom: 1.5rem;">Error placeholder</h3>
+        <p style="color: var(--text-muted);">Something went wrong. Please try again or go back to the home page.</p>
+        <a th:href="@{/}" class="btn-primary" style="display: inline-block; text-decoration: none; margin-top: 1rem;">← Back to Home</a>
+    </div>
 </div>
 
-<form th:replace="~{fragments/PageLayout.html :: footer}"></form>
+<div th:replace="~{fragments/PageLayout.html :: footer}"></div>
 </body>
 </html>
