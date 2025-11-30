@@ -89,7 +89,7 @@
     <div style="max-width: 800px; margin: 2rem auto;">
         <h3 style="margin-bottom: 1.5rem;">💬 Comments</h3>
         <div th:if="${diveSite.comments.isEmpty()}">
-            <p th:text="#{comments.empty}" style="color: var(--text-muted, #6c757d);">No comments yet. Be the first to share your experience!</p>
+            <p th:text="#{comments.empty}" class="text-muted">No comments yet. Be the first to share your experience!</p>
         </div>
         <div th:unless="${diveSite.comments.isEmpty()}">
             <div class="comment" th:each="comment : ${diveSite.comments}">

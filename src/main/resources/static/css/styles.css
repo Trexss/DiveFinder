@@ -34,7 +34,7 @@ html {
 }
 
 body {
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: linear-gradient(135deg, var(--ocean-surface) 0%, var(--white) 100%);
     min-height: 100%;
     display: flex;
@@ -415,6 +415,10 @@ button:hover {
 
 a.nav {
     margin: 0.5rem;
+}
+
+.text-muted {
+    color: var(--text-muted);
 }
 
 /* ===========================================
