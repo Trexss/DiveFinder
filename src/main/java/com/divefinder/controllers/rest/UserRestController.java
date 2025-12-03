@@ -5,6 +5,7 @@ import com.divefinder.helpers.AuthenticationHelper;
 import com.divefinder.helpers.UserDtoMapper;
 import com.divefinder.models.User;
 import com.divefinder.models.UserDto;
+import com.divefinder.models.UserRestResponseDto;
 import com.divefinder.services.UserService;
 import com.exceptions.AuthorizationException;
 import org.springframework.http.HttpHeaders;
@@ -26,14 +27,14 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable int id, @RequestHeader HttpHeaders headers) {
+    public UserRestResponseDto getUserById(@PathVariable int id, @RequestHeader HttpHeaders headers) {
         try{
             User requestor = authenticationHelper.tryGetUser(headers);
             if(!requestor.isAdmin()){
                 throw new AuthorizationException("Not authorized");
             }
             User user = userService.findUserById(id);
-            return userDtoMapper.toUserDto(user);
+            return userDtoMapper.toUserRestResponseDto(user);
         }catch (com.exceptions.EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }catch (com.exceptions.AuthorizationException e){

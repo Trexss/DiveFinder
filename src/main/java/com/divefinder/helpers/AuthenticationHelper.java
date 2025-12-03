@@ -5,14 +5,17 @@ import com.divefinder.models.User;
 import com.divefinder.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AuthenticationHelper {
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     private static final String INVALID_AUTHENTICATION_ERROR = "Invalid authentication.";
-
+    private static final PasswordEncoder encoder = new BCryptPasswordEncoder();
     private final UserService userService;
 
     @Autowired
@@ -31,7 +34,7 @@ public class AuthenticationHelper {
             String password = getPassword(userInfo);
             User user = userService.findUserByEmail(email);
 
-            if (!user.getPassword().equals(password)) {
+            if (!encoder.matches(password, user.getPassword())) {
                 throw new com.exceptions.AuthorizationException(INVALID_AUTHENTICATION_ERROR);
             }
 
@@ -66,5 +69,12 @@ public class AuthenticationHelper {
         }
         return userService.findUserByEmail(currentUser);
     }
+    public String encodePassword(String password){
+        return encoder.encode(password);
+    }
+    public boolean matchesPassword(String rawPassword, String encodedPassword){
+        return encoder.matches(rawPassword, encodedPassword);
+    }
+
 
 }

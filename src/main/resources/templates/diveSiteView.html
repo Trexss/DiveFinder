@@ -70,7 +70,7 @@
         <h3 th:text="#{comments.title}">Add a comment</h3>
         <form th:action="@{/sites/{id}/comment(id=${diveSite.id})}" th:object="${comment}" method="post">
             <label>
-                <input type="text" th:field="*{commentText}" placeholder="Enter your comment here">
+                <textarea th:field="*{commentText}" placeholder="Enter your comment here" rows="4" cols="50"></textarea>
             </label>
             <br>
             <label class="label-error" th:if="${#fields.hasErrors('commentText')}" th:errors="*{commentText}">Error placeholder</label>

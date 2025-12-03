@@ -43,7 +43,8 @@ public class AuthenticationController {
         }
         try{
             user = userService.findUserByEmail(loginDto.getEmail());
-            if (!user.getPassword().equals(loginDto.getPassword())){
+            String rawPassword = loginDto.getPassword();
+            if (!authenticationHelper.matchesPassword(rawPassword, user.getPassword())){
                 bindingResult.rejectValue("email", "error.auth", null, "Username or password incorrect");
                 return "LoginView";
             }
@@ -74,6 +75,9 @@ public class AuthenticationController {
         }
         User user = userMapper.registerDtoToUser(registerDto);
         try{
+            String rawPassword = user.getPassword();
+            String encodedPassword = authenticationHelper.encodePassword(rawPassword);
+            user.setPassword(encodedPassword);
             userService.createUser(user);
         }catch (EntityDuplicateException e){
             bindingResult.rejectValue("email", "error.duplicate", null, e.getMessage());

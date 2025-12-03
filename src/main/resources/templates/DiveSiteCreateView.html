@@ -18,7 +18,7 @@
 
         <label th:text="#{diveSite.label.description}">Dive Site Description</label>
         <br/>
-        <input type="text" th:field="*{description}"/>
+        <textarea th:field="*{description}" rows="6" cols="50"></textarea>
         <label class="error" th:errors="*{description}">Description error placeholder</label>
         <br/><br/>
 <!--        get coordinates from the map through JS -->

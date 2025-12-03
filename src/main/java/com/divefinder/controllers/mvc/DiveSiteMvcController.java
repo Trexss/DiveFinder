@@ -80,7 +80,7 @@ public class DiveSiteMvcController {
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
         } catch (EntityDuplicateException e) {
-            bindingResult.rejectValue("name", "duplicate_beer", e.getMessage());
+            bindingResult.rejectValue("siteName", "duplicate_diveSite", e.getMessage());
             return "DiveSiteCreateView";
         }
     }
