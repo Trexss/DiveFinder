@@ -18,12 +18,19 @@ public class DiveSite {
     private String siteName;
     private double latitude;
     private double longitude;
+    private double maxDepth;
 
     private boolean isApproved;
     @OneToMany(mappedBy = "diveSite", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
 
+    public double getMaxDepth() {
+        return maxDepth;
+    }
 
+    public void setMaxDepth(double maxDepth) {
+        this.maxDepth = maxDepth;
+    }
 
     public DiveSite() {
     }

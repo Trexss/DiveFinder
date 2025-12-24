@@ -1,5 +1,7 @@
 package com.divefinder.models;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -14,13 +16,24 @@ public class DiveSiteDto {
         @Size(min = 20,  message = "Description must be at least 20 symbols")
         private String description;
         @NotNull
+        @DecimalMin(value = "1.0", inclusive = true, message = "Max depth must be at least 1.0 meter")
+        @DecimalMax(value = "200.0", inclusive = true, message = "max depth must be at most 200.0 meters")
+        private double maxDepth;
+        @NotNull
         private double latitude;
         @NotNull
         private double longitude;
         private boolean approved = false;
 
+    public double getMaxDepth() {
+        return maxDepth;
+    }
 
-        public DiveSiteDto() {
+    public void setMaxDepth(double maxDepth) {
+        this.maxDepth = maxDepth;
+    }
+
+    public DiveSiteDto() {
         }
 
     public int getId() {

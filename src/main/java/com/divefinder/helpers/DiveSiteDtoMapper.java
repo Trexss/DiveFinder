@@ -15,6 +15,7 @@ public class DiveSiteDtoMapper {
         site.setLatitude(dto.getLatitude());
         site.setLongitude(dto.getLongitude());
         site.setSiteName(dto.getSiteName());
+        site.setMaxDepth(dto.getMaxDepth());
         site.setApproved(dto.isApproved());
 
         return site;
@@ -25,6 +26,7 @@ public class DiveSiteDtoMapper {
         dto.setLatitude(site.getLatitude());
         dto.setLongitude(site.getLongitude());
         dto.setSiteName(site.getSiteName());
+        dto.setMaxDepth(site.getMaxDepth());
         dto.setApproved(site.isApproved());
         dto.setId(site.getId());
         return dto;
