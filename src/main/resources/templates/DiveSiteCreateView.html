@@ -15,6 +15,11 @@
         <input type="text" th:field="*{siteName}"/>
         <label class="error" th:errors="*{siteName}">Name error placeholder</label>
         <br/><br/>
+        <label th:text="#{maxDepth.label.name}">Max depth</label>
+        <br/>
+        <input type="text" th:field="*{maxDepth}"/>
+        <label class="error" th:errors="*{maxDepth}">Name error placeholder</label>
+        <br/><br/>
 
         <label th:text="#{diveSite.label.description}">Dive Site Description</label>
         <br/>
