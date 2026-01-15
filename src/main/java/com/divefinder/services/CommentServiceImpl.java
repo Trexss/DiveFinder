@@ -5,6 +5,7 @@ import com.divefinder.models.DiveSite;
 import com.divefinder.models.User;
 import com.divefinder.repositories.CommentRepository;
 import com.divefinder.repositories.DiveSiteRepository;
+import com.exceptions.AuthorizationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,9 @@ private final DiveSiteRepository diveSiteRepository;
 
         if (managedUser == null || managedSite == null) {
             throw new com.exceptions.EntityNotFoundException("User or DiveSite not found");
+        }
+        if (managedUser.isCommentsBlocked()){
+            throw new AuthorizationException("Comments for this user are blocked.");
         }
         comment.setUser(managedUser);
         comment.setDiveSite(managedSite);

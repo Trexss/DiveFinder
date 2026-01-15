@@ -25,6 +25,7 @@ public class UserDto {
     private String lastName;
 
     private boolean isAdmin = false;
+    private boolean commentsBlocked;
 
     public UserDto() {}
 
@@ -66,6 +67,14 @@ public class UserDto {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public boolean isCommentsBlocked() {
+        return commentsBlocked;
+    }
+
+    public void setCommentsBlocked(boolean commentsBlocked) {
+        this.commentsBlocked = commentsBlocked;
     }
 }
 

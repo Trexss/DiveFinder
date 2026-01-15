@@ -16,6 +16,8 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "comments_blocked")
+    private boolean commentsBlocked;
 
     public String getFirstName() {
         return firstName;
@@ -68,5 +70,13 @@ public class User {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public boolean isCommentsBlocked() {
+        return commentsBlocked;
+    }
+
+    public void setCommentsBlocked(boolean commentsBlocked) {
+        this.commentsBlocked = commentsBlocked;
     }
 }

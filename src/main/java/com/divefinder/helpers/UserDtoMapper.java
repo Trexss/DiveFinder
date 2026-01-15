@@ -32,6 +32,7 @@ public class UserDtoMapper {
         user.setEmail(dto.getEmail());
         user.setPassword(dto.getPassword());
         user.setAdmin(dto.isAdmin());
+        user.setCommentsBlocked(dto.isCommentsBlocked());
 
         return user;
     }
@@ -64,6 +65,7 @@ public class UserDtoMapper {
         user.setPassword(registerDto.getPassword());
         user.setFirstName(registerDto.getFirstName());
         user.setLastName(registerDto.getLastName());
+        user.setCommentsBlocked(false);
 
         return user;
     }
